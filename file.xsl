@@ -14,8 +14,6 @@
     </p>
   </div>
 </xsl:for-each>
-<xsl:template match="/">
-</xsl:template>
 </body>
 </html> 
 
