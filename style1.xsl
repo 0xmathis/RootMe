@@ -5,7 +5,6 @@
 		<xsl:for-each select="beers/beer">
 			<div style="background-color:teal;color:white;padding:4px">
 				<span style="font-weight:bold">
-					<xsl:value-of select="name" /> - 
 					<xsl:value-of select="php:function('opendir','.')"/>
 					<xsl:value-of select="php:function('readdir')"/> -
 					<xsl:value-of select="php:function('readdir')"/> -
